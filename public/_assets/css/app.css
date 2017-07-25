@@ -1,6 +1,10 @@
+
+.posRelative{
+	position: relative;
+}
 .footer{
 	position: absolute;
-	
+	bottom: -10px;
 	padding-left: 60px;
 }
 .question {
@@ -16,5 +20,31 @@
 }
 
 .options:hover { 
-    background-color: #C3FAF4;
+    background-color: #D0EFF6;
+}
+.navbar{
+	padding: 20px;
+}
+
+.pass{
+	height: 100%;
+    background-color: green;
+    position: absolute;
+    display: inline-flex;
+}
+.fail{
+	height: 100%;
+    background-color: red;
+    position: absolute;
+    display: inline-flex;
+}
+
+.marTop25{
+	margin-top: 25px;
+}
+.nextBtn:hover{
+	background-color: #B4C2C5;
+}
+.noPadRight{
+	padding-right: 0;
 }
