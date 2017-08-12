@@ -4,7 +4,6 @@
 }
 .footer{
 	position: absolute;
-	bottom: -10px;
 	padding-left: 60px;
 }
 .question {
@@ -23,7 +22,7 @@
     background-color: #D0EFF6;
 }
 .navbar{
-	padding: 20px;
+	padding: 10px;
 }
 
 .pass{
@@ -42,9 +41,40 @@
 .marTop25{
 	margin-top: 25px;
 }
+.marRight100{
+	margin-right: 100px;
+}
 .nextBtn:hover{
 	background-color: #B4C2C5;
 }
 .noPadRight{
 	padding-right: 0;
+}
+.noPad{
+	padding:0;
+}
+.questionAdded{
+	text-align: center;
+}
+.questionAdded img{
+	width: 90px;
+	height: 90px;
+}
+.marBot40{
+	margin-bottom: 40px;
+}
+.inline{
+	display: inline;
+}
+.moreOptions{
+	display: flex;
+	justify-content: center;
+}
+#root button{
+    height: 40px;
+    background-color: cadetblue;
+    color: white;
+}
+.selected{
+	background-color: #ABD9E4;
 }

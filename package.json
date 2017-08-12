@@ -3,8 +3,16 @@
   "version": "0.1.0",
   "author": "Satyam Mishra",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
     "create-react-class": "^15.6.0",
+    "express": "^4.15.3",
+    "express-session": "^1.15.5",
+    "foreman": "^2.0.0",
+    "mongoose": "^4.11.5",
+    "nodemon": "^1.11.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -19,6 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-dev": "nf start -p 3000"
   }
 }

@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 //import PropTypes from 'prop-types';
-var data = require('./data.js');
+import AddQuestion from './forms/QuestionForm.js';
+import Question from './components/Question.js';
+import Options from './components/Options.js';
+import QuestionAdded from './components/QuestionAdded.js';
+// var app = express();
+//var data = require('./data.js'); //this imports data from local file, pass it as a prop to Quiz component
 
 var shuffleArray = array => {
 	let i = array.length - 1;
@@ -13,88 +19,99 @@ var shuffleArray = array => {
 	}
 	return array;
 }
-class Quiz extends React.Component{
+class Quiz extends React.PureComponent{
 	constructor(props, context) {
 	    super(props, context);
 	    this.refreshQuestion = this.refreshQuestion.bind(this);
 	    this.state = {
-	    	change:false
+	    	change:false,
+	    	data:"",
+	    	playQuiz:'show',
+	    	showQuestionForm:'hide',
+	    	questionAdded : 'hide',
+	    	index:0,
+	    	quesadded:true
 	    }
+	    this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
+	    this.addQuestion = this.addQuestion.bind(this);
+	    this.playQuiz = this.playQuiz.bind(this);
+	    //console.log(this.props);
+	    this.navigateToHome = this.navigateToHome.bind(this);
+		this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
 	}
+	loadCommentsFromServer() {
+		axios.get(this.props.url)
+			.then(res => {
+		    	this.setState({ data: res.data });
+			})
+    }
 	refreshQuestion(){
 		this.setState({
-			change:true
+			change:!this.state.change
 		})
 	}
+	addQuestion(){
+		this.setState({
+			playQuiz:'hide',
+			showQuestionForm:'show',
+			questionAdded : 'hide'
+		})
+	}
+	playQuiz(){
+		this.setState({
+			playQuiz:'show',
+			showQuestionForm:'hide',
+			questionAdded : 'hide'
+		})
+	}
+	componentWillMount() {
+		this.loadCommentsFromServer();
+    }
+    handleQuestionSubmit(dataPassed) {
+		axios.post(this.props.url, dataPassed)
+			.then(res => {
+				this.state.data.push(res.config.data);
+				this.setState({
+					questionAdded : 'show',
+					showQuestionForm:'hide'
+				});
+		})
+		.catch(err => {
+			console.error(err);
+		});
+	}
+	navigateToHome(){
+		axios.get(this.props.url)
+			.then(res => {
+		    	this.setState(
+		    		{ 	data: res.data ,
+		    			playQuiz:'show',
+						showQuestionForm:'hide'
+		    		});
+			})
+	}
 	render () {
-		var shuffledPosts = shuffleArray(this.props.data);
+		if(this.state.data==="" || this.state.data===undefined || this.state.data===null){
+    		return false;
+    	}
+		var shuffledPosts = shuffleArray(this.state.data);
+		console.log(this.state.data);
 		return <div>
-			<div className="row posRelative">
+			<div className={this.state.playQuiz + ' row posRelative'}>
 				<div className="col-md-10">
 					<Question data={shuffledPosts[0].question} />
 				</div>
 					<Options data={(shuffledPosts[0])} />
-
-
 			</div>
-			<div className="col-md-10 noPadRight">
+			<div className={'col-md-10 noPad ' +this.state.playQuiz}>
 				<button onClick={this.refreshQuestion} className="marTop25 nextBtn btn col-md-2 pull-right">Next Question</button>
+				<button onClick={this.addQuestion} className="marTop25 nextBtn btn col-md-2 pull-left">Add Question</button>
 			</div>
+			
+			<AddQuestion goBack={this.navigateToHome} classApply={this.state.showQuestionForm} onQuestionSubmit={this.handleQuestionSubmit}/>
+			<QuestionAdded classApply={this.state.questionAdded} playQuiz={this.playQuiz} addQuestionAgain={this.addQuestion}/>
 		</div>; 
 	}
-}
-class Question extends React.Component{
-	render () {
-		return <div className="lead question">
-			<h3>{this.props.data}</h3>
-		</div>
-	}
-}
-
-class Options extends React.Component{
-	constructor(props) {
-	    super(props)
-	    this.state = {
-	    	bgClass :'neutral'
-	    }
-	  }
-	handleClick (valClicked){
-		var isCorrect = valClicked.value === this.props.data.key;
-		this.setState({
-			bgClass : isCorrect ? 'pass' : 'fail',
-			showContinue: isCorrect
-		})
-	 }
-	 componentWillReceiveProps(nextProps){
-	 	this.setState({
-			bgClass : 'neutral'
-		})
-	 }
-	render () {
-		var options = this.props.data.options;
-        return (
-            <div>
-	            <div className="col-md-10">
-	                {options.map((value, index) => {
-	                    return <div onClick={this.handleClick.bind(this,{value})} className="strong options" key={index}>
-	                    	<h4> {index+1}. {value} </h4>
-	                    </div>;
-	                  } , this)}
-	            </div>
-                <Answer className={this.state.bgClass}/>
-            </div>
-        )
-	}
-}
-
-class Answer extends React.Component{
-	// constructor(props){
-	// 	super(props);
-	// }
-	render(){
-		return 	<div className={this.props.className + ' col-md-1'}> </div>
-	}
-
 }
 
 // Quiz.PropTypes = {
@@ -104,4 +121,4 @@ class Answer extends React.Component{
 // 	b: PropTypes.string
 // }
 
-ReactDOM.render(<Quiz data={data} />, document.getElementById('root'));
+ReactDOM.render(<Quiz url='http://localhost:3001/api/people' />, document.getElementById('root'));
