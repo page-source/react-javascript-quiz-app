@@ -1,4 +1,4 @@
-# React-ES6 based Javascript Quiz
+# React-Express-MongoDB based Javascript Quiz
 
 This gist contains the code to create a simple "javascript quiz" with react & ES6. In this version, you can see following features in this app-
 
@@ -12,11 +12,11 @@ First, fork this gist to your own account by clicking the fork symbol in the upp
 
 Then copy the clone URL to your clipboard.
 
-###### Assuming you'll have Node already installed, go with following steps to get the app working:
+#### Assuming you'll have Node already installed, go with following steps to get the app working:
 
-1. Setup MongoDB on your system through this link-> [Setup MongoDB] (https://docs.mongodb.com/manual/installation/).
+1. Setup MongoDB on your system through this link-> [Setup MongoDB](https://docs.mongodb.com/manual/installation/).
 
-2. Verify mongoDB setup by going in the bin folder of mongodb(in my case: C:\mongodb\bin) and run `mongo --version`. This will display the MongoDB version installed on your system and various other information.
+2. Verify mongoDB setup by going in the bin folder of mongodb(in my case: C:/mongodb/bin) and run `mongo --version`. This will display the MongoDB version installed on your system and various other information.
 
 3. Run `npm install` to install all the dependencies & devDependencies.
 
