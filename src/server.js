@@ -32,7 +32,7 @@ app.use('/api', router);
 //starts the server and listens for requests
 
 
-router.route('/people')
+router.route('/questions')
 	.get(function(req, res) {
 	//looks at our Question Schema
 		Question.find(function(err, dataFromDB) {
@@ -45,8 +45,8 @@ router.route('/people')
  	})
  	//post new question to the database
  	.post(function(req, res) {
- 		var question = new Question();
- 		question.question = req.body.question;
+ 		var question 		= new Question();
+ 		question.question 	= req.body.question;
 		question.options 	= req.body.options;
 		question.key 		= req.body.key;
 

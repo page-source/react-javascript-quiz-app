@@ -1,6 +1,6 @@
 import React from 'react';
-//import ReactDOM from 'react-dom';
-
+import {Link , Redirect} from 'react-router-dom';
+import axios from 'axios';
 class AddQuestion extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -10,7 +10,8 @@ class AddQuestion extends React.PureComponent {
             option2: '',
             option3:'',
             option4:'',
-            key:''
+            key:'',
+            fireRedirect:false
         };
         this.handleQuestion =   this.handleQuestion.bind(this);
         this.handleOption1  =   this.handleOption1.bind(this);
@@ -50,19 +51,24 @@ class AddQuestion extends React.PureComponent {
         if (!question || !option1 || !option2 || !option3 || !option4 || !key) {
             return;
         }
-        this.props.onQuestionSubmit(
-            {   question: question, 
-                options : [option1, option2, option3, option4],
-                key     : key 
-            });
+        const dataPassed =  {   question: question, 
+                                options : [option1, option2, option3, option4],
+                                key     : key 
+                            };
+        axios.post(this.props.url, dataPassed)
+            .then(res => {
+                this.setState({ fireRedirect: true })
+
+        })
+
         this.setState({ name: '', age: '', nationality:'', place:"" });
     }
 
     render() {
-      		return <div className={'container '+this.props.classApply}>
+      		return <div className="container">
                         <div className="marBot40"> 
                             <h2 className="inline">Add a Question</h2>
-                            <button onClick={this.props.goBack} className="nextBtn btn col-md-2 pull-right">Go Back</button>
+                            <Link to="/"><button className="nextBtn btn col-md-2 pull-right">Go Back</button></Link>
                         </div>  
                         <form className="form-horizontal"  onSubmit={this.handleSubmit}>
                             <div className="form-group">
@@ -108,6 +114,10 @@ class AddQuestion extends React.PureComponent {
                                 </div>
                             </div>
                         </form>
+                        {console.log(this.state.fireRedirect)}
+                        {this.state.fireRedirect && (
+                            <Redirect to='/questionAdded'/>
+                        )}
                     </div>
 
       		}
