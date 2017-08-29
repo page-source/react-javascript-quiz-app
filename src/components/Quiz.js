@@ -30,9 +30,10 @@ class Quiz extends React.PureComponent{
 		this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
 	}
 	loadCommentsFromServer() {
-		axios.get(this.props.url)
-			.then(res => {
-		    	this.setState({ data: res.data });
+		fetch(this.props.url)
+			.then(res => res.json())
+			.then(data=>{
+		    	this.setState({ data });
 			})
     }
 
