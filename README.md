@@ -3,7 +3,7 @@
 This gist contains the code to create a simple "javascript quiz" with react & ES6. In this version, you can see following features in this app-
 
 1. User can take a quiz and get to know if their answers to questions are right or wrong through red/green signals showing next to question.
-2. Questions can be added through UI interface and the'll get saved in database.
+2. Questions can be added through UI interface and those will get saved in database.
 
 ----
 ### Setup
