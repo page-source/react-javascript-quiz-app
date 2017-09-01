@@ -1,26 +1,18 @@
 import React from 'react';
-import Answer from './Answer.js';
+import Answer from './Answer';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as answerActions from '../actions/selectedAnswerActions';
 class Options extends React.PureComponent{
-	constructor(props) {
-	    super(props)
-	    this.state = {
-	    	bgClass :'neutral'
-	    }
-	  }
+
 	handleClick (valClicked){
-		var isCorrect = (valClicked.index+1) === this.props.data.key;
-		this.setState({
-			bgClass : isCorrect ? 'pass' : 'fail',
-			showContinue: isCorrect
-		})
-	 }
-	 componentWillReceiveProps(nextProps){
-	 	this.setState({
-			bgClass : 'neutral'
-		})
+		let isCorrect = (valClicked.index+1) === this.props.data.key;
+		isCorrect = isCorrect ? 'pass' : 'fail'
+
+		this.props.actions.selectedAnswer(isCorrect);
 	 }
 	render () {
-		var options = this.props.data.options;
+		let options = this.props.data.options;
         return (
             <div>
 	            <div className="col-md-10">
@@ -30,10 +22,21 @@ class Options extends React.PureComponent{
 	                    </div>;
 	                  } , this)}
 	            </div>
-                <Answer classApply={this.state.bgClass}/>
+                <Answer classApply={this.props.bgClass}/>
             </div>
         )
 	}
 }
 
-export default Options;
+function mapStateToProps(state, ownProps){
+    return {
+        bgClass : state.selectedAnswerReducer.bgClass
+    };
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        actions: bindActionCreators(answerActions , dispatch)
+    };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Options);

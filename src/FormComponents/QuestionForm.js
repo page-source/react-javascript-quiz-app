@@ -1,18 +1,11 @@
 import React from 'react';
 import {Link , Redirect} from 'react-router-dom';
-import axios from 'axios';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as questionActions from '../actions/questionActions';
 class AddQuestion extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = { 
-            question: '', 
-            option1: '', 
-            option2: '',
-            option3:'',
-            option4:'',
-            key:'',
-            fireRedirect:false
-        };
         this.handleQuestion =   this.handleQuestion.bind(this);
         this.handleOption1  =   this.handleOption1.bind(this);
         this.handleOption2  =   this.handleOption2.bind(this);
@@ -47,21 +40,29 @@ class AddQuestion extends React.PureComponent {
         let option3 =   this.state.option3.trim();
         let option4 =   this.state.option4.trim();
         let key     =   this.state.key.trim();
-
         if (!question || !option1 || !option2 || !option3 || !option4 || !key) {
             return;
         }
-        const dataPassed =  {   question: question, 
-                                options : [option1, option2, option3, option4],
-                                key     : key 
+        const formData =  {     question    : question, 
+                                options     : [option1, option2, option3, option4],
+                                key         : key 
                             };
-        axios.post(this.props.url, dataPassed)
-            .then(res => {
-                this.setState({ fireRedirect: true })
-
+        fetch(this.props.url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         })
-
-        this.setState({ name: '', age: '', nationality:'', place:"" });
+        .then(res=>res.json())
+        .then(res => 
+                this.props.actions.createQuestion(this.props.questionAdded)
+                
+        )
+        .then(res =>
+            this.props.actions.createQuestion(true)
+        )
     }
 
     render() {
@@ -114,13 +115,23 @@ class AddQuestion extends React.PureComponent {
                                 </div>
                             </div>
                         </form>
-                        {console.log(this.state.fireRedirect)}
-                        {this.state.fireRedirect && (
+                        {this.props.questionAdded && (
                             <Redirect to='/questionAdded'/>
                         )}
                     </div>
 
       		}
     }
+function mapStateToProps(state, ownProps){
+    return {
+        questionAdded: state.addQuestion.questionAdded
+    };
+}
 
-export default AddQuestion;
+function mapDispatchToProps(dispatch){
+    return {
+        actions: bindActionCreators(questionActions , dispatch)
+    };
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddQuestion);

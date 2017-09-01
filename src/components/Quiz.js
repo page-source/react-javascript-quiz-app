@@ -1,7 +1,6 @@
 import React from 'react';
 //import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
-import axios from 'axios';
 import Question from './Question.js';
 import Options from './Options.js';
 //let data = require('./data.js'); //this imports data from local file, pass it as a prop to Quiz component
@@ -20,16 +19,11 @@ class Quiz extends React.PureComponent{
 	constructor(props, context) {
 	    super(props, context);
 	    this.state = {
-	    	change:false,
-	    	data:"",
-	    	questionAdded : 'hide',
-	    	index:0,
-	    	quesadded:true
+	    	data:""
 	    }
-	    this.handleQuestionSubmit = this.handleQuestionSubmit.bind(this);
-		this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
+		this.loadQuestionsFromServer = this.loadQuestionsFromServer.bind(this);
 	}
-	loadCommentsFromServer() {
+	loadQuestionsFromServer() {
 		fetch(this.props.url)
 			.then(res => res.json())
 			.then(data=>{
@@ -38,20 +32,8 @@ class Quiz extends React.PureComponent{
     }
 
 	componentWillMount() {
-		this.loadCommentsFromServer();
+		this.loadQuestionsFromServer();
     }
-    handleQuestionSubmit(dataPassed) {
-		axios.post(this.props.url, dataPassed)
-			.then(res => {
-				this.state.data.push(res.config.data);
-				this.setState({
-					questionAdded : 'show'
-				});
-		})
-		.catch(err => {
-			console.error(err);
-		});
-	}
 
 	render () {
 		if(this.state.data==="" || this.state.data===undefined || this.state.data===null){
