@@ -23,7 +23,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
+    "eslint": "^7.4.0",
     "eslint-plugin-react": "^7.0.1",
     "react-scripts": "0.9.5",
     "redux-immutable-state-invariant": "^2.0.0"
