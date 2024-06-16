@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import Question from './Question.js';
 import Options from './Options.js';
+import data from '../data.js';
 //let data = require('./data.js'); //this imports data from local file, pass it as a prop to Quiz component
 
 const shuffleArray = array => {
@@ -29,6 +30,9 @@ class Quiz extends React.PureComponent{
 			.then(data=>{
 		    	this.setState({ data });
 			})
+      .catch(() => {
+        this.setState({data});
+      })
     }
 
 	componentWillMount() {
