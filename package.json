@@ -11,7 +11,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.5",
     "foreman": "^3.0.1",
-    "mongoose": "^4.11.5",
+    "mongoose": "^5.13.20",
     "nodemon": "^1.11.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
