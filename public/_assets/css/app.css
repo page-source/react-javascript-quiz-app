@@ -1,76 +1,126 @@
+.posRelative {
+  position: relative;
+}
 
-.posRelative{
-	position: relative;
+.footer {
+  position: absolute;
+  padding-left: 60px;
 }
-.footer{
-	position: absolute;
-	padding-left: 60px;
-}
+
 .question {
-	background-color: #C3FAF4;
-    padding: 10px;
-    margin-bottom: 10px;
+  background-color: #C3FAF4;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.optionsWrapper {
+  margin-top: 20px;
 }
 
 .options {
-	background-color: #E5F7F5;
-    padding: 10px;
-    margin-bottom: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-.options:hover { 
-    background-color: #D0EFF6;
-}
-.pass{
-	height: 100%;
-    background-color: green;
-    position: absolute;
-    display: inline-flex;
-}
-.fail{
-	height: 100%;
-    background-color: red;
-    position: absolute;
-    display: inline-flex;
+.options:hover {
+  background-color: #D0EFF6;
 }
 
-.marTop25{
-	margin-top: 25px;
+.option {
+  background-color: #E5F7F5;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  text-align: center;
+  margin: 10px;
+  font-size: 21px;
+  font-weight: 500;
 }
-.marRight100{
-	margin-right: 100px;
+
+.disableEvents {
+  pointer-events: none;
 }
-.nextBtn:hover{
-	background-color: #B4C2C5;
+
+.option:hover {
+  cursor: pointer;
 }
-.noPadRight{
-	padding-right: 0;
+
+.option.bg-green {
+  background-color: #8bdb8b;
 }
-.noPad{
-	padding:0;
+
+.option.bg-red {
+  background-color: #f89c9c;
 }
-.questionAdded{
-	text-align: center;
+
+.pass {
+  height: 100%;
+  background-color: green;
+  position: absolute;
+  display: inline-flex;
 }
-.questionAdded img{
-	width: 90px;
-	height: 90px;
+
+.fail {
+  height: 100%;
+  background-color: red;
+  position: absolute;
+  display: inline-flex;
 }
-.marBot40{
-	margin-bottom: 40px;
+
+.marTop25 {
+  margin-top: 25px;
 }
-.inline{
-	display: inline;
+
+.marRight100 {
+  margin-right: 100px;
 }
-.moreOptions{
-	display: flex;
-	justify-content: center;
+
+.nextBtn:hover {
+  background-color: #B4C2C5;
 }
-#root button{
-    height: 40px;
-    background-color: cadetblue;
-    color: white;
+
+.noPadRight {
+  padding-right: 0;
 }
-.selected{
-	background-color: #ABD9E4;
+
+.noPad {
+  padding: 0;
+}
+
+.questionAdded {
+  text-align: center;
+}
+
+.questionAdded img {
+  width: 90px;
+  height: 90px;
+}
+
+.marBot40 {
+  margin-bottom: 40px;
+}
+
+.inline {
+  display: inline;
+}
+
+.moreOptions {
+  display: flex;
+  justify-content: center;
+}
+
+#root button {
+  height: 40px;
+  background-color: cadetblue;
+  color: white;
+}
+
+.selected {
+  background-color: #ABD9E4;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px; 
+  text-align: center;
 }

@@ -1,44 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router, Route
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import {Provider} from 'react-redux';
 import Quiz from './components/Quiz';
-import QuestionForm from './FormComponents/QuestionForm';
-import QuestionAdded from './components/QuestionAdded';
+import { QuizProvider } from './context/QuizContext'; // Import your QuizProvider
 
-const state={ addQuestion:{
-                question: '', 
-                option1: '', 
-                option2: '',
-                option3:'',
-                option4:'',
-                key:'',
-                questionAdded:false
-            },
-            selectedAnswerReducer:{
-                bgClass :'neutral'
-            }
-          };
-const store = configureStore(state);
+// Initial Redux store state
+const initialState = {
+  addQuestion: {
+    question: '',
+    option1: '',
+    option2: '',
+    option3: '',
+    option4: '',
+    key: '',
+    questionAdded: false,
+  },
+  selectedAnswerReducer: {
+    bgClass: 'neutral',
+  },
+};
 
-ReactDOM.render(
+// Configure Redux store
+const store = configureStore(initialState);
+
+// Create root entry point for ReactDOM
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Render the application
+root.render(
   <Provider store={store}>
-  	<Router>
-  		<div>
-  			<Route exact path="/" render={props => 
-            <Quiz url='http://localhost:3001/api/questions' {...props} />
-        }/>
-        <Route exact path="/addQuestion" render={props => 
-            <QuestionForm url='http://localhost:3001/api/questions'/>
-        }/>
-        <Route exact path="/questionAdded" render={props => 
-            <QuestionAdded />
-        }/>
-  		</div>
-  	</Router>
-  </Provider>,
-	document.getElementById('root')	
+    <Router>
+      <QuizProvider>
+        {' '}
+        {/* Wrap your entire app with QuizProvider */}
+        <Routes>
+          <Route path='/' element={<Quiz />} />
+          {/* Add more routes as needed */}
+        </Routes>
+      </QuizProvider>
+    </Router>
+  </Provider>
 );
