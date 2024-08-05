@@ -1,43 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
-// import { Link } from 'react-router-dom';
 import Question from './Question.js';
 import Options from './Options.js';
 import data from '../data.js';
 import Total from './Total';
 import QuizComplete from './QuizComplete.js';
 
-// import { useQuizContext } from '../context/QuizContext.js';
-
-// import { useQuizContext } from '../context/QuizContext';
-
-// if you want to shuffle questions everytime just to add an element of surprise
-
-// const shuffleArray = (array) => {
-//   let i = array.length - 1;
-
-//   for (; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     const temp = array[i];
-//     array[i] = array[j];
-//     array[j] = temp;
-//   }
-
-//   return array;
-// };
-
 const Quiz = ({ url }) => {
-  const [quizData, setQuizData] = useState({});
+  const [quizData, setQuizData] = useState([]);
   const [completeQuiz, setCompleteQuiz] = useState(false);
   const [questionCounter, setQuestionCounter] = useState(0);
   const [optionSelected, setOptionSelected] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [timer, setTimer] = useState(25);
+  const timerRef = useRef();
 
-  // const { selectedOption, setSelectedOption } = useQuizContext();
+  const stopTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  };
 
   const nextQuestion = () => {
-    if (optionSelected) {
+    if (optionSelected || timer === 0) {
       if (questionCounter === quizData.length - 1) {
         setCompleteQuiz(true);
       } else {
@@ -47,19 +32,27 @@ const Quiz = ({ url }) => {
       setOptionSelected(false);
       setErrorMessage('');
     } else {
-      setErrorMessage('You forgot to select an option. Just take a guess maybe.');
+      setErrorMessage('You forgot to select an option.');
     }
   };
 
-  // Use useEffect to perform actions based on questionCounter changes
   useEffect(() => {
-    setOptionSelected(false);
-    console.log(questionCounter);
-
-    if (questionCounter === quizData.length) {
-      setCompleteQuiz(true);
+    if (timer === 0) {
+      nextQuestion();
     }
-  }, [questionCounter, quizData.length]); // Dependencies array
+  }, [timer]);
+
+  useEffect(() => {
+    stopTimer(); // Stop any existing timer
+    setTimer(25); // Reset the timer
+    setOptionSelected(false);
+
+    timerRef.current = setInterval(() => {
+      setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timerRef.current); // Clear timer on component unmount
+  }, [questionCounter]);
 
   useEffect(() => {
     const loadQuestionsFromServer = async () => {
@@ -79,40 +72,37 @@ const Quiz = ({ url }) => {
     return <div>Loading...</div>;
   }
 
-  // const shuffledPosts = shuffleArray(quizData);
   const shuffledPosts = quizData;
 
-  console.log(shuffledPosts);
   return (
-    <div>
+    <div className='quizContainer'>
       {completeQuiz ? (
         <QuizComplete quizLength={quizData.length} />
       ) : (
         <React.Fragment>
           <div className='row posRelative'>
-            <div className='col-md-10 disableEvents mx-auto'>
-              <Question data={shuffledPosts[questionCounter].question} />
+            <div className='disableEvents mx-auto'>
+              <Question data={shuffledPosts[questionCounter]?.question} />
+              <div className='timer'>Time left: {timer} seconds</div>
             </div>
             <Options
               data={shuffledPosts[questionCounter]}
-              onOptionSelect={() => setOptionSelected(true)} // Handle option select
+              onOptionSelect={() => setOptionSelected(true)}
+              stopTimer={stopTimer}
               optionSelected={optionSelected}
             />
-            {/* <Total counter={questionCounter + 1} data={quizData} /> */}
+            <Total counter={questionCounter + 1} data={quizData} />
           </div>
           {errorMessage && <div className='error-message'>{errorMessage}</div>}
-          <div className='col-md-10 noPad'>
+          <div className='noPad'>
             <button
               className='marTop25 nextBtn btn pull-right'
-              onClick={() => nextQuestion()}
+              onClick={nextQuestion}
             >
-              {questionCounter === quizData.length - 1 ? 'Complete Quiz' : 'Next Question'}
+              {questionCounter === quizData.length - 1
+                ? 'Complete Quiz'
+                : 'Next Question'}
             </button>
-            {/* <Link to='/addQuestion'>
-              <button className='marTop25 nextBtn btn pull-left'>
-                Add Question
-              </button>
-            </Link> */}
           </div>
         </React.Fragment>
       )}

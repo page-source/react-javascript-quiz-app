@@ -1,5 +1,16 @@
+.quizContainer{
+  width: 75%;
+  margin: 0 auto;
+}
+
 .posRelative {
   position: relative;
+}
+.timer {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .footer {
@@ -23,8 +34,12 @@
   margin-bottom: 10px;
 }
 
-.options:hover {
+
+.option:hover {
   background-color: #D0EFF6;
+
+  cursor: pointer;
+
 }
 
 .option {
@@ -41,9 +56,7 @@
   pointer-events: none;
 }
 
-.option:hover {
-  cursor: pointer;
-}
+
 
 .option.bg-green {
   background-color: #8bdb8b;
