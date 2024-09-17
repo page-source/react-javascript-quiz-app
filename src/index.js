@@ -1,43 +1,40 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+import { createRoot } from 'react-dom/client';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import Quiz from './components/Quiz';
-import { QuizProvider } from './context/QuizContext'; // Import your QuizProvider
 
-// Initial Redux store state
+import Homepage from './components/HomePage';
+import StartQuiz from './components/StartQuiz';
+import Quiz from './components/Quiz';
+import { QuizProvider } from './context/QuizContext';
+import Header from './components/Header';
+
 const initialState = {
-  addQuestion: {
-    question: '',
-    option1: '',
-    option2: '',
-    option3: '',
-    option4: '',
-    key: '',
-    questionAdded: false,
-  },
-  selectedAnswerReducer: {
-    bgClass: 'neutral',
-  },
+  addQuestion: { question: '', option1: '', option2: '', option3: '', option4: '', key: '', questionAdded: false },
+  selectedAnswerReducer: { bgClass: 'neutral' },
 };
 
-// Configure Redux store
 const store = configureStore(initialState);
 
-// Create root entry point for ReactDOM
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
 
-// Render the application
 root.render(
   <Provider store={store}>
     <Router>
       <QuizProvider>
-        {' '}
-        {/* Wrap your entire app with QuizProvider */}
+        <Header />
         <Routes>
-          <Route path='/' element={<Quiz />} />
-          {/* Add more routes as needed */}
+          <Route path='/' element={<Homepage />} />
+          {/* Route for starting the quiz */}
+          <Route path='/attempt/:quizKey' element={<StartQuiz />} />
+          {/* Routes for actual quizzes */}
+          <Route
+            path='/quiz/:quizKey'
+            element={<Quiz url='http://localhost:4000/api/quizzes' />}
+          />
         </Routes>
       </QuizProvider>
     </Router>

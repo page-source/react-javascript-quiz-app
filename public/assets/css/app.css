@@ -137,3 +137,20 @@
   font-size: 16px; 
   text-align: center;
 }
+
+/* styling for header */
+.quiz-title {
+  text-decoration: none; /* Removes the default link underline */
+  color: inherit; /* Keeps the original h1 color */
+}
+
+.quiz-title:hover, .quiz-title:active, .quiz-title:visited, .quiz-title:focus {
+  color: inherit; /* Prevents color change on hover */
+  text-decoration: none; 
+  cursor: pointer;
+}
+
+.quiz-subtext {
+  font-size: 1.2rem;
+  color: #777;
+}

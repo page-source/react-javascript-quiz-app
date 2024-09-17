@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Question from './Question.js';
 import Options from './Options.js';
-import data from '../data.js';
+
+// import data from '../data.js';
 import Total from './Total';
 import QuizComplete from './QuizComplete.js';
 
@@ -36,6 +38,8 @@ const Quiz = ({ url }) => {
     }
   };
 
+  const { quizKey } = useParams(); // Get quizKey from URL
+
   useEffect(() => {
     if (timer === 0) {
       nextQuestion();
@@ -43,39 +47,38 @@ const Quiz = ({ url }) => {
   }, [timer]);
 
   useEffect(() => {
-    stopTimer(); // Stop any existing timer
-    setTimer(25); // Reset the timer
-    setOptionSelected(false);
+      stopTimer(); // Stop any existing timer
+      setTimer(25); // Reset the timer
+      setOptionSelected(false);
 
-    timerRef.current = setInterval(() => {
-      setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
-    }, 1000);
+      timerRef.current = setInterval(() => {
+        setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+      }, 1000);
 
     return () => clearInterval(timerRef.current); // Clear timer on component unmount
   }, [questionCounter]);
 
   useEffect(() => {
-    const loadQuestionsFromServer = async () => {
+    const fetchQuizData = async () => {
       try {
-        const response = await fetch(url);
+        const response = await fetch(`${url}/${quizKey}`); // Fetch data using quizKey
         const data = await response.json();
-        setQuizData(data);
+        setQuizData(data.questions);
       } catch (error) {
-        setQuizData(data); // Fallback to local data in case of error
+        console.error('Error fetching quiz data:', error);
       }
     };
 
-    loadQuestionsFromServer();
-  }, [url]);
+    fetchQuizData();
+  }, [quizKey]); // Fetch new data when quizKey changes
 
   if (!quizData || !quizData.length) {
     return <div>Loading...</div>;
   }
 
   const shuffledPosts = quizData;
-
   return (
-    <div className='quizContainer'>
+    <div className='quizContainer marTop25'>
       {completeQuiz ? (
         <QuizComplete quizLength={quizData.length} />
       ) : (
@@ -88,7 +91,6 @@ const Quiz = ({ url }) => {
             <Options
               data={shuffledPosts[questionCounter]}
               onOptionSelect={() => setOptionSelected(true)}
-              stopTimer={stopTimer}
               optionSelected={optionSelected}
             />
             <Total counter={questionCounter + 1} data={quizData} />

@@ -159,13 +159,6 @@ module.exports = {
     'react/jsx-no-duplicate-props': 'error',
     'react/jsx-no-constructed-context-values': 'error',
     'react/jsx-newline': 'off',
-    'react/jsx-max-props-per-line': [
-      'error',
-      {
-        maximum: 2,
-        when: 'always',
-      },
-    ],
     'react/jsx-wrap-multilines': [
       'error',
       {

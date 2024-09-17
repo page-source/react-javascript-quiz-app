@@ -4,6 +4,8 @@
   "author": "Satyam Mishra",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "create-react-class": "^15.7.0",
@@ -22,6 +24,7 @@
     "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
+    "@mui/material": "^6.0.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

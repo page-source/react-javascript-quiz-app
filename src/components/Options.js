@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useQuizContext } from '../context/QuizContext.js';
 
-const Options = ({ data, onOptionSelect, stopTimer, optionSelected }) => {
+const Options = ({ data, onOptionSelect, optionSelected }) => {
   const [state, setState] = useState({
     selectedOption: null,
     isCorrect: null,
@@ -17,7 +17,7 @@ const Options = ({ data, onOptionSelect, stopTimer, optionSelected }) => {
 
   const handleOptionClick = (index) => {
     if (!optionSelected) {
-      const correct = index + 1 === data.key;
+      const correct = index + 1 === parseInt(data.key); // Check if the selected option is correct
 
       if (correct) {
         setTotalCorrect((prev) => prev + 1);
@@ -28,7 +28,7 @@ const Options = ({ data, onOptionSelect, stopTimer, optionSelected }) => {
         isCorrect: correct,
       });
 
-      stopTimer(); // Stop the timer when an option is selected
+      // stopTimer(); // for dont stop the timer when an option is selected
     }
   };
 
@@ -47,10 +47,15 @@ const Options = ({ data, onOptionSelect, stopTimer, optionSelected }) => {
         {data?.options.map((value, index) => {
           let optionClass = 'option';
 
+          // If the option is selected
           if (selectedOption !== null) {
             if (index === selectedOption) {
+              // If the selected option is correct, color it green; otherwise, red
               optionClass += isCorrect ? ' bg-green' : ' bg-red';
-            } else if (index + 1 === data.key) {
+            }
+
+            // If the selected option is wrong, show the correct option in green
+            if (!isCorrect && index + 1 === parseInt(data.key)) {
               optionClass += ' bg-green';
             }
           }
