@@ -80,7 +80,7 @@ const Quiz = ({ url }) => {
   return (
     <div className='quizContainer marTop25'>
       {completeQuiz ? (
-        <QuizComplete quizLength={quizData.length} />
+        <QuizComplete quizLength={quizData.length} quizKey={quizKey} />
       ) : (
         <React.Fragment>
           <div className='row posRelative'>

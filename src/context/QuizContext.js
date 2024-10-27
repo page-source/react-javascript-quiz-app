@@ -9,6 +9,7 @@ export const QuizProvider = ({ children }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalWrong, setTotalWrong] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
 
   // const [selectedOption, setSelectedOption] = useState(null);
   const appContext = useMemo(() => {
@@ -19,6 +20,8 @@ export const QuizProvider = ({ children }) => {
       setTotalCorrect,
       totalWrong,
       setTotalWrong,
+      userInfo,
+      setUserInfo
     };
   }, [
     selectedOption,
@@ -26,6 +29,8 @@ export const QuizProvider = ({ children }) => {
     setTotalCorrect,
     totalWrong,
     setTotalWrong,
+    userInfo,
+    setUserInfo
   ]);
 
   return (

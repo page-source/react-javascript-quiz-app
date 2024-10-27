@@ -1,48 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link, Typography, Box, TextField, List, ListItem } from '@mui/material';
-import Grid2 from '@mui/material/Grid2'; // Import Grid2
+import { Link, Typography, Box, Grid2, Container } from '@mui/material'; // Import Container here
+import LoginHeader from './LoginHeader';
+import QuizSearch from './QuizSearch';
 
-const Header = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredQuizzes, setFilteredQuizzes] = useState([]);
+// Sample quiz data (you can later fetch this dynamically)
+const quizzes = [
+  { name: 'JavaScript', path: '/javascript' },
+  { name: 'HTML', path: '/html' },
+  { name: 'CSS', path: '/css' },
+  { name: 'React', path: '/react' },
+  { name: 'Node.js', path: '/nodejs' },
+  { name: 'MongoDB', path: '/mongodb' },
+];
 
-  // Sample quiz data
-  const quizzes = [
-    { name: 'JavaScript', path: '/javascript' },
-    { name: 'HTML', path: '/html' },
-    { name: 'CSS', path: '/css' },
-    { name: 'React', path: '/react' },
-    { name: 'Node.js', path: '/nodejs' },
-    { name: 'MongoDB', path: '/mongodb' },
-  ];
+const Header = () => (
+  <Box component='header' sx={{ py: 4, backgroundColor: '#f5f5f5' }}>
+    <Container maxWidth='lg'>
+      <Grid2
+        container
+        alignItems='center'
+        justifyContent='space-between'
 
-  // Handle search input changes
-  const handleSearchChange = (event) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
-
-    // Filter quizzes based on search query
-    if (query) {
-      const filtered = quizzes.filter(quiz =>
-        quiz.name.toLowerCase().includes(query)
-      );
-
-      setFilteredQuizzes(filtered);
-    } else {
-      setFilteredQuizzes([]);
-    }
-  };
-
-  return (
-    <Box component='header' sx={{ py: 4, backgroundColor: '#f5f5f5' }}>
-      <Grid2 container alignItems='center'>
-        {/* Quizzinga Title */}
+        // sx={{ px: 2 }} // Added padding on the x-axis to provide space on both ends
+      >
+        {/* Title on the left with margin */}
         <Grid2>
           <Typography
             variant='h1'
             component='div'
-            sx={{ fontSize: '3rem', fontWeight: '500', whiteSpace: 'nowrap' }} // Keep title inline
+            sx={{ fontSize: '3rem', fontWeight: '500', whiteSpace: 'nowrap' }}
           >
             <Link
               className='quiz-title'
@@ -57,40 +44,17 @@ const Header = () => {
         </Grid2>
 
         {/* Search Input */}
-        <Grid2 sx={{ ml: 2 }}> {/* Add margin to the left */}
-          <TextField
-            label='Search for a quiz...'
-            variant='outlined'
-            value={searchQuery}
-            onChange={handleSearchChange}
-            sx={{
-              width: '300px', // Control width of the search bar
-              backgroundColor: '#fff', // Make it more distinct
-              borderRadius: '4px',
-            }}
-          />
+        <Grid2 sx={{ mx: 2, flexGrow: 1 }}>
+          <QuizSearch quizzes={quizzes} />
+        </Grid2>
+
+        {/* Login Component on the right with margin */}
+        <Grid2>
+          <LoginHeader />
         </Grid2>
       </Grid2>
-
-      {/* Display search results */}
-      {filteredQuizzes.length > 0 && (
-        <List>
-          {filteredQuizzes.map((quiz) => (
-            <ListItem key={quiz.name}>
-              <Link
-                component={RouterLink}
-                to={quiz.path}
-                underline='none'
-                sx={{ color: '#000', textDecoration: 'none', fontSize: '1.2rem' }}
-              >
-                {quiz.name} Quiz
-              </Link>
-            </ListItem>
-          ))}
-        </List>
-      )}
-    </Box>
-  );
-};
+    </Container>
+  </Box>
+);
 
 export default Header;
