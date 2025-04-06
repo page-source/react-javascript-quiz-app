@@ -47,13 +47,13 @@ const Quiz = ({ url }) => {
   }, [timer]);
 
   useEffect(() => {
-      stopTimer(); // Stop any existing timer
-      setTimer(25); // Reset the timer
-      setOptionSelected(false);
+    stopTimer(); // Stop any existing timer
+    setTimer(25); // Reset the timer
+    setOptionSelected(false);
 
-      timerRef.current = setInterval(() => {
-        setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
-      }, 1000);
+    timerRef.current = setInterval(() => {
+      setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+    }, 1000);
 
     return () => clearInterval(timerRef.current); // Clear timer on component unmount
   }, [questionCounter]);
@@ -86,7 +86,10 @@ const Quiz = ({ url }) => {
           <div className='row posRelative'>
             <div className='disableEvents mx-auto'>
               <Question data={shuffledPosts[questionCounter]?.question} />
-              <div className='timer'>Time left: {timer} seconds</div>
+              <div className='questionInfo'>
+                <span className='timer'>Time left: {timer} seconds</span>
+                <Total counter={questionCounter + 1} data={quizData} />
+              </div>
             </div>
             <Options
               data={shuffledPosts[questionCounter]}
