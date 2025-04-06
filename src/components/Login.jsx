@@ -68,6 +68,11 @@ const Login = () => {
               type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              inputRef={(input) => {
+                if (input !== null) {
+                   input.focus();
+                }
+              }}
             />
           </Box>
           <Box sx={{ marginBottom: '1.5rem' }}>

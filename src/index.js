@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles'; // Import ThemeProvider
 import theme from './theme'; // Import the theme object
 import Homepage from './components/HomePage';
@@ -14,6 +19,8 @@ import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './components/Dashboard';
 import axios from 'axios';
 import { Container } from '@mui/material';
+import Signup from './components/Signup';
+import Welcome from './components/Welcome';
 
 const GlobalAuthCheck = () => {
   const { setUserInfo } = useQuizContext();
@@ -22,7 +29,9 @@ const GlobalAuthCheck = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/auth/me', { withCredentials: true });
+        const response = await axios.get('http://localhost:4000/api/auth/me', {
+          withCredentials: true,
+        });
 
         if (response.data) {
           setUserInfo({ name: response.data.name, email: response.data.email });
@@ -45,22 +54,45 @@ const GlobalAuthCheck = () => {
 const root = createRoot(document.getElementById('root'));
 
 root.render(
-  <ThemeProvider theme={theme}> {/* Apply the theme here */}
+  <ThemeProvider theme={theme}>
+    {' '}
+    {/* Apply the theme here */}
     <Router>
-    <Container maxWidth='lg'> {/* Adjust the maxWidth as needed */}
-      <QuizProvider>
-        <GlobalAuthCheck />
-        <Header />
-        <Routes>
-          <Route path='/' element={<Homepage />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/profile' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-          <Route path='/profile/edit' element={<PrivateRoute><EditProfile /></PrivateRoute>} />
-          <Route path='/attempt/:quizKey' element={<StartQuiz />} />
-          <Route path='/quiz/:quizKey' element={<Quiz url='http://localhost:4000/api/quizzes' />} />
-        </Routes>
-      </QuizProvider>
-    </Container>
+      <Container maxWidth='lg'>
+        {' '}
+        {/* Adjust the maxWidth as needed */}
+        <QuizProvider>
+          <GlobalAuthCheck />
+          <Header />
+          <Routes>
+            <Route path='/' element={<Homepage />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/welcome' element={<Welcome />} />
+            <Route
+              path='/profile'
+              element={(
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              )}
+            />
+            <Route
+              path='/profile/edit'
+              element={(
+                <PrivateRoute>
+                  <EditProfile />
+                </PrivateRoute>
+              )}
+            />
+            <Route path='/attempt/:quizKey' element={<StartQuiz />} />
+            <Route
+              path='/quiz/:quizKey'
+              element={<Quiz url='http://localhost:4000/api/quizzes' />}
+            />
+          </Routes>
+        </QuizProvider>
+      </Container>
     </Router>
   </ThemeProvider>
 );

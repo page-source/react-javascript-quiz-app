@@ -32,11 +32,10 @@ const StartQuiz = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-
-        // justifyContent: 'center',
         height: '100vh',
         textAlign: 'center',
         padding: '2rem',
+        typography: 'body1',
       }}
     >
       <Typography variant='h4' gutterBottom>
@@ -47,47 +46,59 @@ const StartQuiz = () => {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' }, // Stack vertically on small screens, horizontally on medium+ screens
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '80%', // Adjust width as needed
           marginTop: '2rem',
         }}
       >
-        {/* RULES Text on the left */}
-        <Typography variant='h2' fontWeight={500} gutterBottom>
+        {/* RULES Text */}
+        <Typography
+          variant='h2'
+          fontWeight={500}
+          gutterBottom
+          sx={{
+            marginBottom: { xs: '1rem', md: 0 }, // Add margin for spacing in mobile view
+          }}
+        >
           RULES:
         </Typography>
 
         {/* Vertical Divider */}
         <Divider
-          orientation='vertical'
+          orientation={{ xs: 'horizontal', md: 'vertical' }} // Horizontal for small screens, vertical for larger
           flexItem
           sx={{
-            mx: 2,
-            height: '100%', // Ensure the line stretches vertically
-            borderRightWidth: 2, // Adjust line thickness
+            mx: { xs: 0, md: 2 }, // No horizontal margin on small screens
+            my: { xs: 2, md: 0 }, // Vertical margin for spacing in mobile view
+            height: { xs: '2px', md: '100%' }, // Adjust height for small screens
+            borderRightWidth: { md: 2 }, // Line thickness for vertical mode
+            borderBottomWidth: { xs: 2, md: 0 }, // Line thickness for horizontal mode
           }}
         />
 
-        {/* Rules list on the right */}
-        <List sx={{ textAlign: 'left', marginLeft: '1rem' }}>
-          <ListItem
-            divider
-            sx={{ fontSize: '1.8rem', backgroundColor: '#f0f0f0' }} // Light gray background for first item
-          >
-            • Do not refresh the page during the quiz.
+        {/* Rules List */}
+        <List
+          sx={{
+            textAlign: 'left',
+            marginLeft: { xs: 0, md: '1rem' }, // No margin for mobile view
+          }}
+        >
+          <ListItem divider sx={{ backgroundColor: '#f0f0f0' }}>
+            <Typography variant='body1'>
+              • Do not refresh the page during the quiz.
+            </Typography>
           </ListItem>
-          <ListItem
-            divider
-            sx={{ fontSize: '1.8rem', backgroundColor: '#e0e0e0' }} // Darker gray for second item
-          >
-            • Each question has a time limit of 25 seconds.
+          <ListItem divider sx={{ backgroundColor: '#e0e0e0' }}>
+            <Typography variant='body1'>
+              • Each question has a time limit of 25 seconds.
+            </Typography>
           </ListItem>
-          <ListItem
-            divider
-            sx={{ fontSize: '1.8rem', backgroundColor: '#f0f0f0' }} // Alternating back to light gray
-          >
-            • You cannot revisit a question after you move to the next one.
+          <ListItem divider sx={{ backgroundColor: '#f0f0f0' }}>
+            <Typography variant='body1'>
+              • You cannot revisit a question after you move to the next one.
+            </Typography>
           </ListItem>
         </List>
       </Box>
@@ -101,7 +112,7 @@ const StartQuiz = () => {
           marginTop: '4rem',
           width: '200px',
           height: '50px',
-          fontSize: '1.8rem'
+          fontSize: '1.2rem',
         }}
       >
         Start Quiz

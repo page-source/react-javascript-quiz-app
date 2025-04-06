@@ -17,7 +17,7 @@ const Hero = () => {
           position: 'relative',
           width: '100%',
           height: '300px',
-          backgroundImage: `url(assets/images/hero.webp)`,
+          backgroundImage: `url(assets/images/quiz-hero.webp)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           display: 'flex',
@@ -25,8 +25,7 @@ const Hero = () => {
           alignItems: 'center',
           overflow: 'hidden',
         }}
-      >
-      </Box>
+      ></Box>
     </div>
   );
 };

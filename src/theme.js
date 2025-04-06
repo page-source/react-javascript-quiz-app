@@ -1,6 +1,6 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: '#1976d2', // Your primary color
@@ -16,20 +16,24 @@ const theme = createTheme({
       primary: '#333333', // Primary text color
       secondary: '#757575', // Secondary text color
     },
-    body: { backgroundColor: "red" }
   },
   typography: {
     fontFamily: 'Roboto Mono, sans-serif',
-    fontSize: '1rem',
+    fontSize: 16, // Base font size
     h1: { fontSize: '2rem' }, // Adjust as needed
     h2: { fontSize: '1.75rem' },
-    h3: { fontSize: '1.50rem' },
-    h4: { fontSize: '1.5rem' },
-
-    // Add more styles for h3, h4, etc. as necessary
-    body1: { fontSize: '1rem' }, // Adjust body text size
-
-    // Define more typography styles if needed
+    h3: { fontSize: '1.5rem' },
+    h4: { fontSize: '1.2rem' },
+    body1: {
+      fontSize: '1rem', // Adjust body text size for base
+      '@media (max-width:600px)': { fontSize: '0.875rem' }, // For small screens
+      '@media (max-width:900px)': { fontSize: '0.95rem' }, // For tablets
+    },
+    body2: {
+      fontSize: '0.875rem', // Adjust secondary body text size for base
+      '@media (max-width:600px)': { fontSize: '0.8rem' }, // For small screens
+      '@media (max-width:900px)': { fontSize: '0.9rem' }, // For tablets
+    },
   },
   components: {
     MuiCssBaseline: {
@@ -43,5 +47,7 @@ const theme = createTheme({
     },
   },
 });
+
+theme = responsiveFontSizes(theme);
 
 export default theme;
