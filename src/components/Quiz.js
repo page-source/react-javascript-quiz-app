@@ -84,9 +84,8 @@ const Quiz = ({ url }) => {
       ) : (
         <React.Fragment>
           <div className='row posRelative'>
-            <div className='disableEvents mx-auto'>
               <Question data={shuffledPosts[questionCounter]?.question} />
-              <div className='questionInfo'>
+              <div className='questionInfo d-flex justify-between'>
                 <span className='timer'>Time left: {timer} seconds</span>
                 <Total counter={questionCounter + 1} data={quizData} />
               </div>
@@ -96,8 +95,6 @@ const Quiz = ({ url }) => {
               onOptionSelect={() => setOptionSelected(true)}
               optionSelected={optionSelected}
             />
-            <Total counter={questionCounter + 1} data={quizData} />
-          </div>
           {errorMessage && <div className='error-message'>{errorMessage}</div>}
           <div className='noPad'>
             <button

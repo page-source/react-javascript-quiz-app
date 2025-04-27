@@ -30,6 +30,7 @@ const Carousel = ({ title, type }) => {
       <Typography variant='h4' gutterBottom sx={{ marginBottom: 2, fontWeight: 600 }}>
         {title}
       </Typography>
+
       <Grid2 container spacing={2}>
         {quizzes.map((quiz) => (
           <Grid2

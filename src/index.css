@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .quizContainer{
   width: 75%;
   margin: 0 auto;
@@ -7,7 +11,6 @@
   position: relative;
 }
 .timer {
-  margin: 0 auto;
   text-align: center;
   font-size: 18px;
   font-weight: 500;
@@ -56,6 +59,13 @@
   pointer-events: none;
 }
 
+.questionInfo {
+  display: flex;
+  justify-content: space-between; /* Align items to the left and right */
+  align-items: center; /* Vertically center the items */
+  width: 100%; /* Ensure it spans the full width of the parent */
+  padding: 0 1rem; /* Optional: Add some padding */
+}
 
 
 .option.bg-green {

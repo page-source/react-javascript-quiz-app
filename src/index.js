@@ -6,6 +6,7 @@ import {
   Route,
   useNavigate,
 } from 'react-router-dom';
+import './index.css';
 import { ThemeProvider } from '@mui/material/styles'; // Import ThemeProvider
 import theme from './theme'; // Import the theme object
 import Homepage from './components/HomePage';

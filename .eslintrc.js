@@ -196,7 +196,7 @@ module.exports = {
         props: 'never',
       },
     ],
-    'react/jsx-closing-tag-location': 'error',
+    'react/jsx-closing-tag-location': 'off',
     'react/jsx-closing-bracket-location': ['error', 'tag-aligned'],
     'react/function-component-definition': [
       'error',

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const Total = ({ counter, data }) => {
   return (
     <span>
-      {counter}/{data.length}
+      Question: {counter}/{data.length}
     </span>
   );
 };

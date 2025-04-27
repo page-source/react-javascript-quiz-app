@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Question = ({ data }) => {
   return (
     <div className='lead question disableEvents'>
-      <h3>{data}</h3>
+      <h3 className='text-xl'>{data}</h3>
     </div>
   );
 };
